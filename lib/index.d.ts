@@ -1,1 +1,1 @@
-export declare const Greeter: (name: string) => string;
+declare function add(a: number, b: number): number;
