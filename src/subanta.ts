@@ -4,6 +4,7 @@ import {
 } from './extractors';
 import {ENDINGS, SUBANTA_DATA, SUBANTA_PRATYAYAS} from "./data/subanta";
 
+/* tslint:disable:no-string-literal */
 export function decline ( identifier: string ): string {
     const mULa = extractMULa ( identifier.trim() );
     let liGga = extractLiGga ( identifier.trim() );
@@ -21,11 +22,10 @@ export function decline ( identifier: string ): string {
     }
     const index = (vibhakti-1)*3 + vindex;
     const sdata = SUBANTA_DATA;
-    for ( let i=0; i< sdata.length; i++ ){
-        const sub = sdata[i];
+    for ( const sub of sdata ){
         if ( mULa.substring(mULa.length-sub['word'].length) === sub['word'] ){
             const pre = mULa.substring(0, mULa.length-sub['word'].length)
-            if ( sub['word'] === mULa && sub['linga'] == liGga ) {
+            if ( sub['word'] === mULa && sub['linga'] === liGga ) {
                 const forms = sub['forms'].split(";")
                 if ( forms.length > 0 ){
                     return pre + forms[index].split('-')[0].trim();
@@ -33,8 +33,7 @@ export function decline ( identifier: string ): string {
             }
         }
     }
-    for ( let i=0; i< ENDINGS.length; i++ ){
-        const ending = ENDINGS[i];
+    for ( const ending of ENDINGS ) {
         if ( mULa.substring(mULa.length-ending.length) === ending ) {
             const subForm = liGga.toLowerCase() + '_' + ending;
             const forms: string[] = getDeclensions( subForm)
@@ -48,11 +47,11 @@ export function decline ( identifier: string ): string {
 }
 
 function getDeclensions( subForm: string ): string[] {
-    for ( let i =0; i< SUBANTA_PRATYAYAS.length; i++ ) {
-        if ( SUBANTA_PRATYAYAS[i].name === subForm ) {
-            return SUBANTA_PRATYAYAS[i].value;
+    for ( const pratyaya of SUBANTA_PRATYAYAS ) {
+        if ( pratyaya.name === subForm ) {
+            return pratyaya.value;
         }
     }
     return [];
 }
-
+/* tslint:disable:no-string-literal */

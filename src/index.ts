@@ -6,6 +6,17 @@ import {decline} from "./subanta";
 export function verify ( identifier: string ): boolean {
     return verifyIdentifier ( identifier );
 }
+
+export function inflectPhrase ( phrase: string ): string{
+    const identifiers: string[] = phrase.split(" ");
+    const words = [];
+    for ( const identifier of identifiers ){
+        const word = inflect(identifier);
+        words.push ( word );
+    }
+    return words.join(" ");
+}
+
 export function extract ( identifier: string, property: string ): any {
     if ( !verifyIdentifier (identifier ) ){
         if ( property.toUpperCase() === 'MULA' ){
@@ -22,9 +33,10 @@ export function extract ( identifier: string, property: string ): any {
     }
     return '';
 }
-export function inflect ( pada: string, params=[] ): string {
+
+function inflect ( pada: string, params=[] ): string {
     let identifier = pada;
-    if ( params.length == 0 ){
+    if ( params.length === 0 ){
         if ( !verifyIdentifier (identifier ) ){
             return identifier;
         }

@@ -31,7 +31,7 @@ export function getLakaraList(): string[] {
 }
 
 export function createLakaraDataName ( lakara: string, prayoga: string ): string {
-    let ldname = prayoga.toLowerCase()[0];
+    const ldname = prayoga.toLowerCase()[0];
     switch ( lakara ){
         case "LAT" : return ldname + 'lat';
         case "LIT" : return ldname + 'lit';

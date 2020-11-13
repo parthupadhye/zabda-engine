@@ -8,7 +8,7 @@ export function extractTagStr ( identifier: string ):string {
     if ( !verifyIdentifier (identifier ) ){
         return '';
     }
-    let tagStr = identifier.split(')')[1];
+    const tagStr = identifier.split(')')[1];
     return tagStr;
 }
 export function extractMULa ( identifier: string ):string {
@@ -24,7 +24,7 @@ export function extractLiGga ( identifier: string ):string {
     }
     const tagstr = extractTagStr ( identifier );
     const mod = tagstr.length % 3;
-    let triples = Math.floor( tagstr.length/3 );
+    const triples = Math.floor( tagstr.length/3 );
     if ( triples < 1 ){
         return '';
     }
@@ -42,7 +42,7 @@ export function extractVacana ( identifier: string ):string {
     }
     const tagstr = extractTagStr ( identifier );
     const mod = tagstr.length % 3;
-    let triples = Math.floor( tagstr.length/3 );
+    const triples = Math.floor( tagstr.length/3 );
     if ( triples < 1 ){
         return '';
     }
@@ -60,7 +60,7 @@ export function extractVibhakti ( identifier: string ):number {
     }
     const tagstr = extractTagStr ( identifier );
     const mod = tagstr.length % 3;
-    let triples = Math.floor( tagstr.length/3 );
+    const triples = Math.floor( tagstr.length/3 );
     if ( triples < 1 ){
         return 0;
     }
@@ -69,7 +69,7 @@ export function extractVibhakti ( identifier: string ):number {
         case 0: vibhakti = tagstr.substr(tagstr.length-2,1); break;
         case 2: vibhakti = tagstr.substr(tagstr.length-1,1); break;
     }
-    return parseInt(vibhakti);
+    return parseInt(vibhakti, 10);
 }
 
 export function extractPrakAra ( identifier: string ):string {
@@ -78,8 +78,8 @@ export function extractPrakAra ( identifier: string ):string {
     }
     const tagstr = extractTagStr ( identifier );
     const mod = tagstr.length % 3;
-    let triples = Math.floor( tagstr.length/3 );
-    if ( triples == 1 ){
+    const triples = Math.floor( tagstr.length/3 );
+    if ( triples === 1 ){
         return tagstr.substr(0, 3);
     }
     return tagstr.substr(tagstr.length-(6-mod), 3);
@@ -154,7 +154,7 @@ export function extractKriyaLakara ( identifier: string ): string {
         return '';
     }
     const tagstr = extractTagStr ( identifier );
-    if ( tagstr.length == 5 ){
+    if ( tagstr.length === 5 ){
         return tagstr.substr(0,3);
     }
     return ''
@@ -165,7 +165,7 @@ export function extractKriyaPuruSa ( identifier: string ): string {
         return '';
     }
     const tagstr = extractTagStr ( identifier );
-    if ( tagstr.length == 5 ){
+    if ( tagstr.length === 5 ){
         return tagstr.substr(3,1);
     }
     return ''
@@ -186,7 +186,7 @@ export function extractKriyaVacana ( identifier: string ): string {
         return '';
     }
     const tagstr = extractTagStr ( identifier );
-    if ( tagstr.length == 5 ){
+    if ( tagstr.length === 5 ){
         return tagstr.substr(4,1);
     }
     return ''
@@ -202,20 +202,19 @@ export function extractKriyaVacanaIndex ( identifier: string ): number {
     return -1;
 }
 
-
 export function getUniques ( array: string[] ): string[] {
     const output: string[] = [];
-    for ( let i=0; i< array.length; i++ ){
-        if ( !isInArray(array[i], output) ) {
-            output.push ( array[i] );
+    for ( const item of array ) {
+        if ( !isInArray(item, output) ) {
+            output.push ( item );
         }
     }
     return output
 }
 
-export function isInArray ( item: string, array: string[] ): boolean {
-    for ( let i=0; i< array.length; i++ ) {
-        if ( array[i] == item ) {
+export function isInArray ( obj: string, array: string[] ): boolean {
+    for ( const item of array ) {
+        if ( obj === item ) {
             return true;
         }
     }
