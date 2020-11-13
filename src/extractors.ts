@@ -85,6 +85,124 @@ export function extractPrakAra ( identifier: string ):string {
     return tagstr.substr(tagstr.length-(6-mod), 3);
 }
 
+export function extractKriyaDhatu ( identifier: string ): string {
+    if ( !verifyIdentifier (identifier ) ){
+        return '';
+    }
+    const kpd = identifier.split(')')[0].split('(')[1];
+    const kpdsplit = kpd.split('|')
+    if ( kpdsplit.length === 3 ) {
+        return kpdsplit[0];
+    } else {
+        return kpdsplit[1];
+    }
+}
+
+export function extractKriyaUpapada ( identifier: string ): string {
+    if ( !verifyIdentifier (identifier ) ){
+        return '';
+    }
+    const kpd = identifier.split(')')[0].split('(')[1];
+    const kpdsplit = kpd.split('|')
+    let upapada = "";
+    if ( kpdsplit.length > 3 ) {
+        upapada = kpdsplit[0];
+    }
+    return upapada;
+}
+
+export function extractKriyaDhatuIndex ( identifier: string ): string {
+    if ( !verifyIdentifier (identifier ) ){
+        return '';
+    }
+    if ( !verifyIdentifier (identifier ) ){
+        return '';
+    }
+    const kpd = identifier.split(')')[0].split('(')[1];
+    const kpdsplit = kpd.split('|')
+    let dhatuIndex = "";
+    if ( kpdsplit.length === 3 ) {
+        dhatuIndex = kpdsplit[1];
+    } else {
+        dhatuIndex = kpdsplit[2];
+    }
+    let kindex = dhatuIndex;
+    if ( dhatuIndex.length < 7 ) {
+        kindex = "0" + dhatuIndex;
+    }
+    return kindex;
+}
+
+export function extractKriyaPrayoga ( identifier: string ): string {
+    if ( !verifyIdentifier (identifier ) ){
+        return '';
+    }
+    if ( !verifyIdentifier (identifier ) ){
+        return '';
+    }
+    const kpd = identifier.split(')')[0].split('(')[1];
+    const kpdsplit = kpd.split('|')
+    if ( kpdsplit.length === 3 ) {
+        return kpdsplit[2];
+    } else {
+        return kpdsplit[3];
+    }
+}
+
+export function extractKriyaLakara ( identifier: string ): string {
+    if ( !verifyIdentifier (identifier ) ){
+        return '';
+    }
+    const tagstr = extractTagStr ( identifier );
+    if ( tagstr.length == 5 ){
+        return tagstr.substr(0,3);
+    }
+    return ''
+}
+
+export function extractKriyaPuruSa ( identifier: string ): string {
+    if ( !verifyIdentifier (identifier ) ){
+        return '';
+    }
+    const tagstr = extractTagStr ( identifier );
+    if ( tagstr.length == 5 ){
+        return tagstr.substr(3,1);
+    }
+    return ''
+}
+
+export function extractKriyaPuruSaIndex ( identifier: string ): number {
+    const vacana = extractKriyaPuruSa(identifier);
+    switch ( vacana ) {
+        case "P" : return 0;
+        case "M" : return 1;
+        case "U" : return 2;
+    }
+    return -1;
+}
+
+export function extractKriyaVacana ( identifier: string ): string {
+    if ( !verifyIdentifier (identifier ) ){
+        return '';
+    }
+    const tagstr = extractTagStr ( identifier );
+    if ( tagstr.length == 5 ){
+        return tagstr.substr(4,1);
+    }
+    return ''
+}
+
+export function extractKriyaVacanaIndex ( identifier: string ): number {
+    const vacana = extractKriyaVacana(identifier);
+    switch ( vacana ) {
+        case "E" : return 0;
+        case "D" : return 1;
+        case "B" : return 2;
+    }
+    return -1;
+}
+
+
 export function getUniques ( array: string[] ): string[] {
     const output: string[] = [];
     for ( let i=0; i< array.length; i++ ){

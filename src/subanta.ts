@@ -1,52 +1,8 @@
 import {
-    verifyIdentifier, extractLiGga, extractVacana,
-    extractVibhakti, extractMULa, extractPrakAra, getUniques, isInArray
+    extractLiGga, extractVacana,
+    extractVibhakti, extractMULa
 } from './extractors';
 import {ENDINGS, SUBANTA_DATA, SUBANTA_PRATYAYAS} from "./data/subanta";
-
-export function identifySubanta ( word: string ): string {
-    const identifiers: string[] = [];
-    const sdata = SUBANTA_DATA;
-    for ( let i=0; i< sdata.length; i++ ){
-        const sub = sdata[i];
-        const forms = sub['forms'].split(";")
-        const zword = sub['word'];
-        for ( let f=0; f< forms.length; f++ ){
-            const form = forms[f];
-            if ( word.substring(word.length-form.length) === form ) {
-                if ( form.length > 0 ){
-                    const pre = word.substring(0, word.length-form.length);
-                    let mULa = pre + sub['word'];
-                    let liGga = sub['linga'];
-                    const vindex = f % 3;
-                    const vibhakti = ( f - vindex )/3 + 1;
-                    let vacana = 'E';
-                    if ( vindex === 1 ){
-                        vacana = 'D';
-                    } else if ( vindex === 2 ){
-                        vacana = 'B';
-                    }
-                    let identifier = word + '(' + pre + sub['word'] + ')SMN' + liGga + vibhakti + vacana;
-                    if ( !isInArray(identifier[i], identifiers) ) {
-                        identifiers.push(identifier)
-                    }
-                }
-            }
-        }
-    }
-
-    const otherIdentifiers = identifyFromPratyayas( word );
-    for ( let f=0; f< otherIdentifiers.length; f++ ){
-        const identifier = otherIdentifiers[f];
-        if ( !isInArray(identifier, identifiers) ) {
-            identifiers.push(identifier)
-        }
-    }
-
-    const uniques = getUniques(identifiers)
-
-    return identifiers.join(', ');
-}
 
 export function decline ( identifier: string ): string {
     const mULa = extractMULa ( identifier.trim() );
@@ -100,28 +56,3 @@ function getDeclensions( subForm: string ): string[] {
     return [];
 }
 
-function identifyFromPratyayas ( word: string ): string[] {
-    const identifiers: string[] = [];
-    for ( let i =0; i< SUBANTA_PRATYAYAS.length; i++ ) {
-        const forms = SUBANTA_PRATYAYAS[i].value;
-        for ( let f=0; f< forms.length; f++ ){
-            const form = forms[f];
-            if ( word.substring( word.length - form.length ) === form ) {
-                const liGga = SUBANTA_PRATYAYAS[i].name.split('_')[0].toUpperCase();
-                const ending = SUBANTA_PRATYAYAS[i].name.split('_')[1];
-                const mULa = word.substring( 0, word.length - form.length ) + ending;
-                const vindex = f % 3;
-                const vibhakti = ( f - vindex )/3 + 1;
-                let vacana = 'E';
-                if ( vindex === 1 ){
-                    vacana = 'D';
-                } else if ( vindex === 2 ){
-                    vacana = 'B';
-                }
-                const identifier = word + '(' + mULa + ')SMN' + liGga + vibhakti + vacana;
-                identifiers.push ( identifier );
-            }
-        }
-    }
-    return identifiers;
-}

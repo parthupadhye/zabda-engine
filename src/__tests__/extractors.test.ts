@@ -1,4 +1,4 @@
-import {extractPrakAra, extractTagStr} from "../extractors";
+import {extractKriyaDhatu, extractKriyaDhatuIndex, extractPrakAra, extractTagStr} from "../extractors";
 import {extractLiGga} from "../extractors";
 import {extractVacana} from "../extractors";
 import {extractVibhakti} from "../extractors";
@@ -67,4 +67,13 @@ test('Get PrakAra from identifier devAnAm(deva)SMNP6B', () => {
 test('Get PrakAra from identifier devAnAm', () => {
     expect(extractPrakAra('devAnAm')).toBe('');
 });
+
+test('Get Dhatu from identifier (bhU|1.0001|P)LATPE', () => {
+    expect(extractKriyaDhatu('(bhU|1.0001|P)LATPE')).toBe('bhU');
+});
+
+test('Get Dhatu Index from identifier (bhU|1.0001|P)LATPE', () => {
+    expect(extractKriyaDhatuIndex('(bhU|1.0001|P)LATPE')).toBe('01.0001');
+});
+
 
